@@ -1,0 +1,32 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js dev
+
+PATH: 
+  C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\ClockworkMod\Universal Adb Driver\;C:\Users\王智勇\AppData\Local\Programs\Python\Python36;C:;Users\王智勇\AppData\Local\Programs\Python\Python36\Scripts;%J;VA_HOME%\bin;C:\Program Files\Java\jdk1.8.0_112\jre\bin;D:\sdk\tools;D:\sdk\platform-tools;C:\Android;C:\Windows\System32;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Users\王智勇\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\王智勇\AppData\Local\Programs\Python\Python36\;D:\Microsoft VS Code\bin;D:\fiddler;C:\Users\王智勇\AppData\Roaming\npm;C:\Users\王智勇\AppData\Local\Yarn\bin;C:\Program Files\Mercurial
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.9.3
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Couldn't find a package.json file in "E:\\代码\\vue-cli@2.0\\my_template_vue"
+      at new MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:40048:15
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:98:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:109:13
+      at <anonymous>

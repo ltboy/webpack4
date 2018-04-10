@@ -1,0 +1,22 @@
+{
+  "prompts": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "label": "Project name"
+    },
+    "description": {
+      "type": "string",
+      "required": true,
+      "label": "Project description",
+      "default": "A Vue.js project"
+    },
+    "author": {
+      "type": "string",
+      "label": "Author",
+      "default": "ltboy<https://github.com/ltboy>"
+    }
+  },
+  "completeMessage":
+    "To get started:\n\n  cd {{destDirName}}\n  然后使用yarn或者npm初始化项目"
+}
