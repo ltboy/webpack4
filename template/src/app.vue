@@ -8,7 +8,20 @@
 export default {}
 </script>
 <style>
+
 div {
   color: aqua;
+}
+.a {
+  color: red;
+}
+.b {
+  color: red;
+}
+.c {
+  color: red;
+}
+.d {
+  color: red;
 }
 </style>

@@ -15,7 +15,9 @@ module.exports = {
   // 路径相关
   resolve: {
     // 别名
-    alias: {},
+    alias: {
+      '@': utils.resolve('src')
+    },
     // 扩展 后缀名 (尽量少)
     extensions: ['.js', '.vue', '.css', 'jsx', 'json'],
     modules: ['node_modules'],
