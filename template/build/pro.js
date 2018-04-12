@@ -46,30 +46,34 @@ module.exports = merge(baseConfig, {
       },
       {
         test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              minimize: true
-            }
-          },
-          'postcss-loader'
-        ]
+        use: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true
+              }
+            },
+            'postcss-loader'
+          ],
+          fallback: 'vue-style-loader'
+        })
       },
       {
         test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              minimize: true
-            }
-          },
-          'postcss-loader',
-          'sass-loader'
-        ]
+        use: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true
+              }
+            },
+            'postcss-loader',
+            'sass-loader'
+          ],
+          fallback: 'vue-style-loader'
+        })
       }
     ]
   },
