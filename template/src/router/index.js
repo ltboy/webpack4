@@ -1,6 +1,9 @@
 import Router from 'vue-router'
 import Vue from 'vue'
-import Home from '../views/home/index.vue'
+
+import _import from './_import'
+
+const Home = _import('home')
 
 Vue.use(Router)
 
