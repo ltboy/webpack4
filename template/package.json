@@ -1,5 +1,5 @@
 {
-  "name": "sada",
+  "name": "{{ name }}",
   "description": "{{ description }}",
   "author": "{{ author }}",
   "private": true,
@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --config build/dev.js",
-    "build": "rimraf dist && webpack --config build/pro.js"
+    "build": "rimraf dist && webpack --progress --config build/pro.js"
   },
   "devDependencies": {
     "autoprefixer": "^8.2.0",
