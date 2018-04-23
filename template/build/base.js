@@ -4,13 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const utils = require('./utils.js')
-const config = require('../config/index.js')
+
 module.exports = {
   entry: './src/index.js',
   output: {
     path: utils.resolve('dist'),
-    filename: config.assetsSubDirectory + '/js/[name]_[hash:6].js',
-    publicPath: config.publicPath
+    filename:'js/[name]_[hash:6].js',
+    publicPath: './'
   },
   // 路径相关
   resolve: {
@@ -36,7 +36,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.resolve('img/[name].[hash:7].[ext]')
+          name: 'img/[name].[hash:7].[ext]'
         }
       },
       {
@@ -44,7 +44,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.resolve('media/[name].[hash:7].[ext]')
+          name: 'media/[name].[hash:7].[ext]'
         }
       },
       {
@@ -52,7 +52,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.resolve('fonts/[name].[hash:7].[ext]')
+          name: 'fonts/[name].[hash:7].[ext]'
         }
       }
     ]

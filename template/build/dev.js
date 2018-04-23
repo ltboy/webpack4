@@ -62,7 +62,7 @@ module.exports = merge(baseConfig, {
   devServer: {
     hot: true,
     // 配置webpack编译好的静态文件
-    publicPath: config.publicPath,
+    publicPath: './',
     // 配置的是那些不经过webpack编译的静态文件
     contentBase: 'dist',
     compress: true,

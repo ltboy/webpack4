@@ -10,7 +10,7 @@
 
 ```bash
 $ npm install -g vue-cli
-$ vue init ltboy/vue-template@2 my-project
+$ vue init ltboy/webpack4 my-project
 $ cd my-project
 $ yarn
 $ yarn dev

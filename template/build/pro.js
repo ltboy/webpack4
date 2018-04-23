@@ -6,7 +6,6 @@ const webpack = require('webpack')
 const WebpackParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
 const baseConfig = require('./base.js')
-const config = require('../config/index.js')
 module.exports = merge(baseConfig, {
   mode: 'production',
   module: {
@@ -26,6 +25,7 @@ module.exports = merge(baseConfig, {
                 },
                 'postcss-loader'
               ],
+              publicPath: '../',
               fallback: 'vue-style-loader'
             }),
             scss: ExtractTextPlugin.extract({
@@ -39,6 +39,7 @@ module.exports = merge(baseConfig, {
                 'postcss-loader',
                 'sass-loader'
               ],
+              publicPath: '../',
               fallback: 'vue-style-loader'
             })
           }
@@ -56,6 +57,7 @@ module.exports = merge(baseConfig, {
             },
             'postcss-loader'
           ],
+          publicPath: '../',
           fallback: 'vue-style-loader'
         })
       },
@@ -72,6 +74,7 @@ module.exports = merge(baseConfig, {
             'postcss-loader',
             'sass-loader'
           ],
+          publicPath: '../',
           fallback: 'vue-style-loader'
         })
       }
@@ -100,7 +103,7 @@ module.exports = merge(baseConfig, {
     // 作用域提升 减少代码量
     new webpack.optimize.ModuleConcatenationPlugin(),
     new ExtractTextPlugin({
-      filename: config.assetsSubDirectory + '/css/[name].css',
+      filename:'css/[name].css',
       allChunks: true
     }),
     new WebpackParallelUglifyPlugin({

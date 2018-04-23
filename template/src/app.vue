@@ -8,9 +8,9 @@
 export default {}
 </script>
 <style>
-
 div {
   color: aqua;
+  background: url('./1.png');
 }
 .a {
   color: red;

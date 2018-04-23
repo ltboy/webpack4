@@ -3,7 +3,11 @@ let _import
 _import =
   process.env.NODE_ENV === 'production'
     ? function(path, chunkName) {
-      return require.ensure([], () => require('@/views/' + path), chunkName)
+      return require.ensure(
+        [],
+        require => require('@/views/' + path),
+        chunkName
+      )
     }
     : function(path, chunkName) {
       return require('@/views/' + path)
