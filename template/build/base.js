@@ -16,6 +16,7 @@ module.exports = {
   resolve: {
     // 别名
     alias: {
+      'vue$': 'vue/dist/vue.esm.js',
       '@': utils.resolve('src')
     },
     // 扩展 后缀名 (尽量少)

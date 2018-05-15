@@ -3,7 +3,7 @@
 const merge = require('webpack-merge')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpack = require('webpack')
-const WebpackParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const baseConfig = require('./base.js')
 module.exports = merge(baseConfig, {
@@ -81,6 +81,7 @@ module.exports = merge(baseConfig, {
     ]
   },
   optimization: {
+    // 代码分割
     splitChunks: {
       cacheGroups: {
         commons: {
@@ -97,29 +98,32 @@ module.exports = merge(baseConfig, {
           enforce: true
         }
       }
-    }
+    },
+    // 代码压缩丑化
+    minimize: true,
+    minimizer: [
+      new UglifyJsPlugin({
+        sourceMap: false,
+        uglifyOptions: {
+          compress: {
+            unused: true,
+            dead_code: true,
+            warnings: true, // 删除warnings
+            drop_console: true // 删除console
+          },
+          output: {
+            comments: false
+          }
+        }
+      })
+    ]
   },
   plugins: [
     // 作用域提升 减少代码量
     new webpack.optimize.ModuleConcatenationPlugin(),
     new ExtractTextPlugin({
-      filename:'css/[name].css',
+      filename: 'css/[name].css',
       allChunks: true
-    }),
-    new WebpackParallelUglifyPlugin({
-      uglifyJS: {
-        mangle: false,
-        output: {
-          beautify: false,
-          comments: false
-        },
-        compress: {
-          warnings: false,
-          drop_console: true,
-          collapse_vars: true,
-          reduce_vars: true
-        }
-      }
     })
   ]
 })

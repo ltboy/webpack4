@@ -66,9 +66,9 @@ module.exports = merge(baseConfig, {
     // 配置的是那些不经过webpack编译的静态文件
     contentBase: 'dist',
     compress: true,
-    host: HOST,
+    host: '0.0.0.0',
     port: PORT,
-    open: true,
+    // open: true,
     overlay: { warnings: false, errors: true },
     quiet: true,
     watchOptions: {
