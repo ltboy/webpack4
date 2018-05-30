@@ -2,6 +2,7 @@
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const utils = require('./utils.js')
 
@@ -9,7 +10,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: utils.resolve('dist'),
-    filename:'js/[name]_[hash:6].js',
+    filename:'static/js/[name]_[hash:6].js',
     publicPath: './'
   },
   // 路径相关
@@ -26,6 +27,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+      },
       {
         test: /\.js$/,
         include: [utils.resolve('src')],
@@ -59,6 +64,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'public/index.html',
@@ -69,7 +75,7 @@ module.exports = {
         removeComments: true
       }
     }),
-    CopyWebpackPlugin([
+    new CopyWebpackPlugin([
       {
         from: 'public',
         to: 'static/',

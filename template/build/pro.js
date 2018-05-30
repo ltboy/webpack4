@@ -1,9 +1,13 @@
 'use strict'
 
 const merge = require('webpack-merge')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpack = require('webpack')
+const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// 压缩css
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const baseConfig = require('./base.js')
 module.exports = merge(baseConfig, {
@@ -11,72 +15,21 @@ module.exports = merge(baseConfig, {
   module: {
     rules: [
       {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            css: ExtractTextPlugin.extract({
-              use: [
-                {
-                  loader: 'css-loader',
-                  options: {
-                    minimize: true
-                  }
-                },
-                'postcss-loader'
-              ],
-              publicPath: '../',
-              fallback: 'vue-style-loader'
-            }),
-            scss: ExtractTextPlugin.extract({
-              use: [
-                {
-                  loader: 'css-loader',
-                  options: {
-                    minimize: true
-                  }
-                },
-                'postcss-loader',
-                'sass-loader'
-              ],
-              publicPath: '../',
-              fallback: 'vue-style-loader'
-            })
-          }
-        }
-      },
-      {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: true
-              }
-            },
-            'postcss-loader'
-          ],
-          publicPath: '../',
-          fallback: 'vue-style-loader'
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          'postcss-loader'
+        ]
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: true
-              }
-            },
-            'postcss-loader',
-            'sass-loader'
-          ],
-          publicPath: '../',
-          fallback: 'vue-style-loader'
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          'postcss-loader',
+          'sass-loader'
+        ]
       }
     ]
   },
@@ -115,15 +68,20 @@ module.exports = merge(baseConfig, {
             comments: false
           }
         }
-      })
-    ]
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ],
+    
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+    }),
     // 作用域提升 减少代码量
+    new CleanWebpackPlugin('dist', {
+      dry: false,
+      root: path.resolve(__dirname, '..')
+    }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new ExtractTextPlugin({
-      filename: 'css/[name].css',
-      allChunks: true
-    })
   ]
 })

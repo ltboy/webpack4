@@ -3,7 +3,6 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
-const config = require('../config/index.js')
 const utils = require('./utils.js')
 const baseConfig = require('./base.js')
 
@@ -21,21 +20,6 @@ module.exports = merge(baseConfig, {
         include: [utils.resolve('src')],
         options: {
           formatter: require('eslint-friendly-formatter')
-        }
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            css: ['vue-style-loader', 'css-loader', 'postcss-loader'],
-            scss: [
-              'vue-style-loader',
-              'css-loader',
-              'postcss-loader',
-              'sass-loader'
-            ]
-          }
         }
       },
       {

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div>a demo with webpack4.0</div>
+  <div class="a">a demo with webpack4.0</div>
   <router-view></router-view>
 </div>
 </template>
@@ -8,12 +8,12 @@
 export default {}
 </script>
 <style>
-div {
-  color: aqua;
-  background: url('./1.png');
+body{
+  background: url('./1.png')
 }
 .a {
   color: red;
+  display: flex;
 }
 .b {
   color: red;
