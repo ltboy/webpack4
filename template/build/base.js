@@ -3,15 +3,15 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const utils = require('./utils.js')
 
 module.exports = {
   entry: './src/index.js',
   output: {
     path: utils.resolve('dist'),
-    filename:'static/js/[name]_[hash:6].js',
-    publicPath: './'
+    filename:'js/[name][hash:6].js',
+    publicPath: '/'
   },
   // 路径相关
   resolve: {
@@ -36,6 +36,23 @@ module.exports = {
         include: [utils.resolve('src')],
         loader: 'babel-loader',
         exclude: ['node_modules']
+      },
+      {
+        test: /\.css$/,
+        use: [
+          process.env.NODE_ENV === 'development'?"vue-style-loader": MiniCssExtractPlugin.loader,
+          "css-loader",
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          process.env.NODE_ENV === 'development'?"vue-style-loader": MiniCssExtractPlugin.loader,
+          "css-loader",
+          'postcss-loader',
+          'sass-loader'
+        ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

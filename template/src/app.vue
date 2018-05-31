@@ -5,11 +5,15 @@
 </div>
 </template>
 <script>
-export default {}
+export default {
+  mounted() {
+    console.log(process.env.NODE_ENV)
+  }
+}
 </script>
 <style>
-body{
-  background: url('./1.png')
+body {
+  background: url('./1.png');
 }
 .a {
   color: red;

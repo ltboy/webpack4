@@ -21,14 +21,6 @@ module.exports = merge(baseConfig, {
         options: {
           formatter: require('eslint-friendly-formatter')
         }
-      },
-      {
-        test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader', 'postcss-loader']
-      },
-      {
-        test: /\.scss$/,
-        use: ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
       }
     ]
   },
@@ -46,9 +38,9 @@ module.exports = merge(baseConfig, {
   devServer: {
     hot: true,
     // 配置webpack编译好的静态文件
-    publicPath: './',
+    publicPath: '/',
     // 配置的是那些不经过webpack编译的静态文件
-    contentBase: 'dist',
+    // contentBase: 'dist',
     compress: true,
     host: '0.0.0.0',
     port: PORT,

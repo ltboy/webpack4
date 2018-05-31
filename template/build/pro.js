@@ -5,43 +5,30 @@ const webpack = require('webpack')
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // 压缩css
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+// 打包优化 分析
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
 
 const baseConfig = require('./base.js')
+
 module.exports = merge(baseConfig, {
   mode: 'production',
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          'postcss-loader'
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          'postcss-loader',
-          'sass-loader'
-        ]
-      }
-    ]
-  },
   optimization: {
     // 代码分割
+    // minSize (default: 30000) 块的最小大小
+    // minChunks (default: 1) 拆分前共享一个模块的最小块数
+    // maxInitialRequests (default 3) 一个入口最大并行请求数
+    // maxAsyncRequests (default 5) 按需加载时最大行行请求数
     splitChunks: {
       cacheGroups: {
         commons: {
-          chunks: 'initial',
+          chunks: 'initial', //通过chunks选项可以选择块，有3个值："initial"、"async"和"all"。分别用于选择初始块、按需加载的块和所有块。
           minChunks: 2,
-          maxInitialRequests: 5, // The default limit is too small to showcase the effect
-          minSize: 0 // This is example is too small to create commons chunks
+          maxInitialRequests: 5,
+          minSize: 1024
         },
         vendor: {
           test: /node_modules/,
@@ -52,8 +39,9 @@ module.exports = merge(baseConfig, {
         }
       }
     },
+
+    // runtimeChunk:true,
     // 代码压缩丑化
-    minimize: true,
     minimizer: [
       new UglifyJsPlugin({
         sourceMap: false,
@@ -69,19 +57,29 @@ module.exports = merge(baseConfig, {
           }
         }
       }),
-      new OptimizeCSSAssetsPlugin({})
-    ],
-    
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: {
+          safe: true,
+          autoprefixer: { disable: true }, // 这里是个大坑，稍后会提到
+          mergeLonghand: false,
+          discardComments: {
+            removeAll: true // 移除注释
+          }
+        }
+      })
+    ]
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "[name].css",
+      filename: '[name].css'
     }),
     // 作用域提升 减少代码量
     new CleanWebpackPlugin('dist', {
       dry: false,
       root: path.resolve(__dirname, '..')
     }),
+    // 作用域提升 减小打包体积
     new webpack.optimize.ModuleConcatenationPlugin(),
+    new BundleAnalyzerPlugin()
   ]
 })
