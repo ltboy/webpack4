@@ -4,20 +4,23 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const PreloadWebpackPlugin = require('preload-webpack-plugin')
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+
 const utils = require('./utils.js')
 
 module.exports = {
   entry: './src/index.js',
   output: {
     path: utils.resolve('dist'),
-    filename:'js/[name][hash:6].js',
+    filename: 'js/[name][hash:6].js',
     publicPath: '/'
   },
   // 路径相关
   resolve: {
     // 别名
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
+      vue$: 'vue/dist/vue.esm.js',
       '@': utils.resolve('src')
     },
     // 扩展 后缀名 (尽量少)
@@ -29,7 +32,7 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        loader: 'vue-loader'
       },
       {
         test: /\.js$/,
@@ -40,16 +43,20 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          process.env.NODE_ENV === 'development'?"vue-style-loader": MiniCssExtractPlugin.loader,
-          "css-loader",
+          process.env.NODE_ENV === 'development'
+            ? 'vue-style-loader'
+            : MiniCssExtractPlugin.loader,
+          'css-loader',
           'postcss-loader'
         ]
       },
       {
         test: /\.scss$/,
         use: [
-          process.env.NODE_ENV === 'development'?"vue-style-loader": MiniCssExtractPlugin.loader,
-          "css-loader",
+          process.env.NODE_ENV === 'development'
+            ? 'vue-style-loader'
+            : MiniCssExtractPlugin.loader,
+          'css-loader',
           'postcss-loader',
           'sass-loader'
         ]
@@ -59,7 +66,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'img/[name].[hash:7].[ext]'
+          name: 'img/[name][hash:7].[ext]'
         }
       },
       {
@@ -87,10 +94,25 @@ module.exports = {
       template: 'public/index.html',
       favicon: 'public/favicon.ico',
       minify: {
+        collapseWhitespace: true,
+        collapseInlineTagWhitespace: true,
         minifyCSS: true,
-        minifyJS: true,
-        removeComments: true
+        minifyJS: true
+        // removeComments: true
       }
+    }),
+    new PreloadWebpackPlugin({
+      rel: 'preload',
+      as(entry) {
+        if (/\.css$/.test(entry)) return 'style'
+        if (/\.woff$/.test(entry)) return 'font'
+        if (/\.png$/.test(entry)) return 'image'
+        return 'script'
+      },
+      include: 'allChunks'
+    }),
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'defer'
     }),
     new CopyWebpackPlugin([
       {

@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "script-ext-html-webpack-plugin": "^2.0.1"
+  }
+}
